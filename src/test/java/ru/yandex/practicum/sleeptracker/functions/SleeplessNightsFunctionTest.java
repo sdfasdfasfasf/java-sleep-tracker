@@ -3,9 +3,12 @@ package ru.yandex.practicum.sleeptracker.functions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.model.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.model.SleepingSession;
+
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SleeplessNightsFunctionTest {
     @Test
@@ -19,7 +22,7 @@ class SleeplessNightsFunctionTest {
         SleepAnalysisResult result = function.analyze(sessions);
 
         assertEquals("Количество бессонных ночей", result.getDescription());
-        assertTrue((Long)result.getValue() >= 1);
+        assertTrue((Long) result.getValue() >= 1);
     }
 
     @Test
@@ -47,7 +50,7 @@ class SleeplessNightsFunctionTest {
         SleeplessNightsFunction function = new SleeplessNightsFunction();
         SleepAnalysisResult result = function.analyze(sessions);
 
-        assertTrue((Long)result.getValue() > 0); // Все ночи бессонные
+        assertTrue((Long) result.getValue() > 0); // Все ночи бессонные
     }
 
     @Test

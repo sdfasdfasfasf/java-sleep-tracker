@@ -10,16 +10,16 @@ import java.util.stream.Collectors;
 
 public class ChronotypeFunction implements SleepAnalysisFunction {
     private Chronotype classifyNight(SleepingSession session) {
-        if(!session.isNightSleep()) {
+        if (!session.isNightSleep()) {
             return null;
         }
 
         int sleepHour = session.getSleepStart().getHour();
         int wakeHour = session.getSleepEnd().getHour();
 
-        if(sleepHour >= 23 && wakeHour >= 9) {
+        if (sleepHour >= 23 && wakeHour >= 9) {
             return Chronotype.OWL;
-        } else if(sleepHour <= 22 && wakeHour <= 7) {
+        } else if (sleepHour <= 22 && wakeHour <= 7) {
             return Chronotype.LARK;
         } else {
             return Chronotype.DOVE;
@@ -45,9 +45,9 @@ public class ChronotypeFunction implements SleepAnalysisFunction {
         long larkCount = counts.getOrDefault(Chronotype.LARK, 0L);
         long doveCount = counts.getOrDefault(Chronotype.DOVE, 0L);
 
-        if(owlCount > larkCount && owlCount > doveCount) {
+        if (owlCount > larkCount && owlCount > doveCount) {
             return Chronotype.OWL;
-        } else if(larkCount > owlCount && larkCount > doveCount) {
+        } else if (larkCount > owlCount && larkCount > doveCount) {
             return Chronotype.LARK;
         } else {
             return Chronotype.DOVE;

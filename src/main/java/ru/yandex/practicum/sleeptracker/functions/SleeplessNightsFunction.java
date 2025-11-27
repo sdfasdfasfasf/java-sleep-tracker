@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SleeplessNightsFunction implements SleepAnalysisFunction {
     @Override
     public SleepAnalysisResult analyze(List<SleepingSession> sessions) {
-        if(sessions.isEmpty()) {
+        if (sessions.isEmpty()) {
             return new SleepAnalysisResult("Количество бессонных ночей", 0);
         }
 
@@ -22,7 +22,7 @@ public class SleeplessNightsFunction implements SleepAnalysisFunction {
                 .map(session -> {
                     LocalDateTime sleepStart = session.getSleepStart();
 
-                    if(sleepStart.getHour() >= 12) {
+                    if (sleepStart.getHour() >= 12) {
                         return sleepStart.toLocalDate().plusDays(1);
                     } else {
                         return sleepStart.toLocalDate();
@@ -49,7 +49,7 @@ public class SleeplessNightsFunction implements SleepAnalysisFunction {
 
                     return sessions.stream().anyMatch(session ->
                             session.getSleepStart().isBefore(nightEnd) &&
-                            session.getSleepEnd().isAfter(nightStart)
+                                    session.getSleepEnd().isAfter(nightStart)
                     );
                 })
                 .count();

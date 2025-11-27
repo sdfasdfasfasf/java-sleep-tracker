@@ -3,10 +3,12 @@ package ru.yandex.practicum.sleeptracker.functions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.model.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.model.SleepingSession;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AverageDurationFunctionTest {
     @Test
