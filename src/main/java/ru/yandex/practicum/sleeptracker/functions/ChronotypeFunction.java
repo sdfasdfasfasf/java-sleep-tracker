@@ -9,6 +9,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChronotypeFunction implements SleepAnalysisFunction {
+    private static final int OWL_SLEEP_HOUR_THRESHOLD = 23;
+    private static final int OWL_WAKE_HOUR_THRESHOLD = 9;
+    private static final int LARK_SLEEP_HOUR_THRESHOLD = 22;
+    private static final int LARK_WAKE_HOUR_THRESHOLD = 7;
+
+    private static final String RESULT_DESCRIPTION = "Хронотип пользователя";
+
     private Chronotype classifyNight(SleepingSession session) {
         if (!session.isNightSleep()) {
             return null;
@@ -17,9 +24,9 @@ public class ChronotypeFunction implements SleepAnalysisFunction {
         int sleepHour = session.getSleepStart().getHour();
         int wakeHour = session.getSleepEnd().getHour();
 
-        if (sleepHour >= 23 && wakeHour >= 9) {
+        if (sleepHour >= OWL_SLEEP_HOUR_THRESHOLD && wakeHour >= OWL_WAKE_HOUR_THRESHOLD) {
             return Chronotype.OWL;
-        } else if (sleepHour <= 22 && wakeHour <= 7) {
+        } else if (sleepHour <= LARK_SLEEP_HOUR_THRESHOLD && wakeHour <= LARK_WAKE_HOUR_THRESHOLD) {
             return Chronotype.LARK;
         } else {
             return Chronotype.DOVE;
@@ -37,7 +44,7 @@ public class ChronotypeFunction implements SleepAnalysisFunction {
                 ));
 
         Chronotype userChronotype = determineUserChronotype(chronotypeCounts);
-        return new SleepAnalysisResult("Хронотип пользователя", userChronotype);
+        return new SleepAnalysisResult(RESULT_DESCRIPTION, userChronotype);
     }
 
     private Chronotype determineUserChronotype(Map<Chronotype, Long> counts) {

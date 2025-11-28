@@ -6,13 +6,16 @@ import ru.yandex.practicum.sleeptracker.model.SleepingSession;
 import java.util.List;
 
 public class MinDurationFunction implements SleepAnalysisFunction {
+    private static final String RESULT_DESCRIPTION = "Минимальная продолжительность сессии (минут)";
+    private static final long DEFAULT_MIN_DURATION = 0L;
+
     @Override
     public SleepAnalysisResult analyze(List<SleepingSession> sessions) {
         long minDuration = sessions.stream()
                 .mapToLong(SleepingSession::getDurationInMinutes)
                 .min()
-                .orElse(0);
+                .orElse(DEFAULT_MIN_DURATION);
 
-        return new SleepAnalysisResult("Минимальная продолжительность сессии (минут)", minDuration);
+        return new SleepAnalysisResult(RESULT_DESCRIPTION, minDuration);
     }
 }

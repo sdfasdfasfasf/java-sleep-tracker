@@ -55,7 +55,7 @@ class SleeplessNightsFunctionTest {
 
     @Test
     public void testSleeplessNightsWithLateNightSession() {
-        List<SleepingSession> sessions = Arrays.asList(
+        List<SleepingSession> sessions = List.of(
                 new SleepingSession("01.10.25 02:00", "01.10.25 08:00", "GOOD") // Ночной сон
         );
 

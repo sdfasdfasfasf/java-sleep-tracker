@@ -11,11 +11,40 @@ import java.util.List;
 import java.util.Objects;
 
 public class SleepTrackerApp {
+    private static final String ANALYSIS_HEADER = "=== Анализ сна ===";
+    private static final String SESSIONS_LOADED_MESSAGE = "Загружено сессий сна: ";
+    private static final String FILE_READ_ERROR = "Ошибка при чтении файла: ";
+    private static final String ANALYSIS_ERROR = "Ошибка при анализе данных: ";
+
     private final List<SleepAnalysisFunction> analysisFunctions;
 
     public SleepTrackerApp() {
         this.analysisFunctions = new ArrayList<>();
         initializeFunctions();
+    }
+
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Использование: java SleepTrackerApp <путь_к_файлу_с_логом>");
+        }
+
+        String filePath = args[0];
+        //String filePath = "src/main/resources/sleep_log.txt";
+        SleepTrackerApp app = new SleepTrackerApp();
+
+        try {
+            List<SleepingSession> sessions = app.loadSleepSessions(filePath);
+            System.out.println(ANALYSIS_HEADER);
+            System.out.println(SESSIONS_LOADED_MESSAGE + sessions.size());
+            System.out.println();
+
+            app.analyzeAndPrintResults(sessions);
+        } catch (IOException e) {
+            System.out.println(FILE_READ_ERROR + e.getMessage());
+        } catch (Exception e) {
+            System.out.println(ANALYSIS_ERROR + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void initializeFunctions() {
@@ -61,29 +90,5 @@ public class SleepTrackerApp {
         analysisFunctions.stream()
                 .map(function -> function.analyze(sessions))
                 .forEach(result -> System.out.println(result));
-    }
-
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Использование: java SleepTrackerApp <путь_к_файлу_с_логом>");
-        }
-
-        String filePath = args[0];
-        //String filePath = "src/main/resources/sleep_log.txt";
-        SleepTrackerApp app = new SleepTrackerApp();
-
-        try {
-            List<SleepingSession> sessions = app.loadSleepSessions(filePath);
-            System.out.println("=== Анализ сна ===");
-            System.out.println("Загружено сессий сна: " + sessions.size());
-            System.out.println();
-
-            app.analyzeAndPrintResults(sessions);
-        } catch (IOException e) {
-            System.out.println("Ошибка при чтении файла: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Ошибка при анализе данных: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 }

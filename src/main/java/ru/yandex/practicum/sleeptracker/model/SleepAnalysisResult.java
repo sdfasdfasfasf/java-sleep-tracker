@@ -1,6 +1,7 @@
 package ru.yandex.practicum.sleeptracker.model;
 
 public class SleepAnalysisResult {
+    private static final String RESULT_FORMAT = "%s: %s";
     private final String description;
     private final Object value;
 
@@ -19,6 +20,6 @@ public class SleepAnalysisResult {
 
     @Override
     public String toString() {
-        return String.format("%s: %s", description, value);
+        return String.format(RESULT_FORMAT, description, value);
     }
 }

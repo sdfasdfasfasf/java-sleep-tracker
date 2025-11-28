@@ -22,7 +22,7 @@ class AverageDurationFunctionTest {
         SleepAnalysisResult result = function.analyze(sessions);
 
         assertEquals("Средняя продолжительность сессии (минут)", result.getDescription());
-        assertEquals(270.0, result.getValue());
+        assertEquals(270L, result.getValue());
     }
 
     @Test
@@ -32,6 +32,6 @@ class AverageDurationFunctionTest {
         AverageDurationFunction function = new AverageDurationFunction();
         SleepAnalysisResult result = function.analyze(sessions);
 
-        assertEquals(0.0, result.getValue());
+        assertEquals(0L, result.getValue());
     }
 }

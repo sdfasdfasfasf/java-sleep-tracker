@@ -5,12 +5,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class SleepingSession {
+    public static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+
+    private static final int EVENING_HOUR_THRESHOLD = 18;
+    private static final int NIGHT_END_HOUR_THRESHOLD = 6;
+    private static final int MORNING_HOUR_THRESHOLD = 6;
+    private static final String TO_STRING_FORMAT = "Sleep: %s - %s (%s, %d min)";
+
     private final LocalDateTime sleepStart;
     private final LocalDateTime sleepEnd;
     private final SleepQuality quality;
-
-    public static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
     public SleepingSession(String sleepStartStr, String sleepEndStr, String qualityStr) {
         this.sleepStart = LocalDateTime.parse(sleepStartStr, DATE_TIME_FORMATTER);
@@ -27,9 +32,9 @@ public class SleepingSession {
         int endHour = sleepEnd.getHour();
 
         return (sleepStart.toLocalDate().equals(sleepEnd.toLocalDate().minusDays(1)) &&
-                startHour >= 18 ||
-                (startHour < 6 && endHour >= 6) ||
-                (startHour >= 18 && endHour < 6));
+                startHour >= EVENING_HOUR_THRESHOLD ||
+                (startHour < NIGHT_END_HOUR_THRESHOLD && endHour >= MORNING_HOUR_THRESHOLD) ||
+                (startHour >= EVENING_HOUR_THRESHOLD && endHour < NIGHT_END_HOUR_THRESHOLD));
     }
 
     public LocalDateTime getSleepStart() {
@@ -46,7 +51,7 @@ public class SleepingSession {
 
     @Override
     public String toString() {
-        return String.format("Sleep: %s - %s (%s, %d min)",
+        return String.format(TO_STRING_FORMAT,
                 sleepStart.format(DATE_TIME_FORMATTER),
                 sleepEnd.format(DATE_TIME_FORMATTER),
                 quality,
